@@ -12,5 +12,9 @@ resource "scaleway_vpc_private_network" "private_network" {
   region = var.region
   vpc_id = scaleway_vpc.vpc.id
 
+  ipv4_subnet {
+    subnet = var.ipv4_subnet
+  }
+
   tags = var.private_network_tags
 }

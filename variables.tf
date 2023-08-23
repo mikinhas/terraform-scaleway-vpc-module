@@ -34,3 +34,9 @@ variable "private_network_tags" {
   default     = []
 
 }
+
+variable "ipv4_subnet" {
+  type        = string
+  description = "Ipv4 subet"
+  default     = "172.16.0.0/24"
+}
