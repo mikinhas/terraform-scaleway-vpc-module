@@ -10,6 +10,7 @@ resource "scaleway_vpc" "vpc" {
 resource "scaleway_vpc_private_network" "private_network" {
   name   = var.private_network_name
   region = var.region
+  vpc_id = scaleway_vpc.vpc.id
 
   tags = var.private_network_tags
 }
