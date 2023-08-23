@@ -9,20 +9,6 @@ variable "region" {
   default = null
 }
 
-variable "zone" {
-  type        = string
-  description = "Name of region zone"
-  default     = ""
-}
-
-variable "name" {
-  type        = string
-  description = "Name of the network"
-  default     = ""
-}
-
-
-
 variable "vpc_name" {
   type        = string
   description = "Vpc name"
@@ -32,6 +18,19 @@ variable "vpc_name" {
 variable "vpc_tags" {
   type        = list(string)
   description = "List of vpc tags"
+  default     = []
+
+}
+
+variable "private_network_name" {
+  type        = string
+  description = "Name of the network"
+  default     = ""
+}
+
+variable "private_network_tags" {
+  type        = list(string)
+  description = "List of private network tags"
   default     = []
 
 }

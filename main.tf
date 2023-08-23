@@ -8,11 +8,8 @@ resource "scaleway_vpc" "vpc" {
 }
 
 resource "scaleway_vpc_private_network" "private_network" {
-  name = var.name
-  zone = var.zone
+  name   = var.private_network_name
+  region = var.region
 
-  tags = [
-    "terraform",
-    "prod"
-  ]
+  tags = var.private_network_tags
 }
