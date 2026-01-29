@@ -1,12 +1,11 @@
 variable "project_id" {
   type        = string
-  description = "The project id"
-  default     = null
+  description = "The Scaleway project ID"
 }
 
 variable "region" {
-  type    = string
-  default = null
+  type        = string
+  description = "The Scaleway region where resources will be created (e.g., fr-par, nl-ams, pl-waw)"
 }
 
 variable "vpc_name" {
@@ -37,6 +36,11 @@ variable "private_network_tags" {
 
 variable "ipv4_subnet" {
   type        = string
-  description = "Ipv4 subet"
+  description = "IPv4 subnet CIDR for the private network"
   default     = "172.16.0.0/24"
+
+  validation {
+    condition     = can(cidrhost(var.ipv4_subnet, 0))
+    error_message = "The ipv4_subnet must be a valid CIDR notation (e.g., 172.16.0.0/24)."
+  }
 }
