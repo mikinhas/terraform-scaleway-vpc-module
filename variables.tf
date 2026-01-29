@@ -21,26 +21,18 @@ variable "vpc_tags" {
 
 }
 
-variable "private_network_name" {
-  type        = string
-  description = "Name of the network"
-  default     = ""
-}
-
-variable "private_network_tags" {
-  type        = list(string)
-  description = "List of private network tags"
-  default     = []
-
-}
-
-variable "ipv4_subnet" {
-  type        = string
-  description = "IPv4 subnet CIDR for the private network"
-  default     = "172.16.0.0/24"
+variable "private_networks" {
+  type = map(object({
+    ipv4_subnet = string
+    tags        = optional(list(string), [])
+  }))
+  description = "Map of private networks to create. Key is the network name, value contains ipv4_subnet and optional tags"
+  default     = {}
 
   validation {
-    condition     = can(cidrhost(var.ipv4_subnet, 0))
-    error_message = "The ipv4_subnet must be a valid CIDR notation (e.g., 172.16.0.0/24)."
+    condition = alltrue([
+      for name, network in var.private_networks : can(cidrhost(network.ipv4_subnet, 0))
+    ])
+    error_message = "All ipv4_subnet values must be valid CIDR notation (e.g., 172.16.0.0/24)."
   }
 }

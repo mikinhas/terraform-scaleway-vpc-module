@@ -8,17 +8,13 @@ output "vpc_name" {
   value       = scaleway_vpc.vpc.name
 }
 
-output "private_network_id" {
-  description = "The ID of the created private network"
-  value       = scaleway_vpc_private_network.private_network.id
-}
-
-output "private_network_name" {
-  description = "The name of the created private network"
-  value       = scaleway_vpc_private_network.private_network.name
-}
-
-output "private_network_cidr" {
-  description = "The IPv4 CIDR block of the private network"
-  value       = scaleway_vpc_private_network.private_network.ipv4_subnet[0].subnet
+output "private_networks" {
+  description = "Map of created private networks with their details"
+  value = {
+    for name, network in scaleway_vpc_private_network.private_network : name => {
+      id          = network.id
+      name        = network.name
+      ipv4_subnet = network.ipv4_subnet[0].subnet
+    }
+  }
 }
